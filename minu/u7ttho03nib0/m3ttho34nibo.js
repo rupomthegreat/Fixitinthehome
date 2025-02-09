@@ -1,58 +1,173 @@
-/*
-File Version:
-1.1
-Added in 23/10/2024 to fix two times API call
-also, fixing navigator.getBattery for Other Browsers, making it work in all browsers.
-1.2
-Added in 23/10/2024
-added useragent...
+let fuse = null; // To store the Fuse instance
+let isFuseLoaded = false; // To track if Fuse.js is loaded
+let isDataLoaded = false; // To track if JSON data is loaded
+let jsonData = null; // To store the fetched JSON data
+// Function to create and append the style element to the head
+function addSearchResultsStyles() {
+    // Create a <style> element
+    const styleElement = document.createElement('style');
+    styleElement.type = 'text/css';
 
+    // Define the CSS rules
+    const cssRules = `
+        .search-results-container {
+            max-height: 60vh !important;
+            overflow-y: scroll;
+            background: #fff7ec;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
 
-As user agent was found in db, no need for it.
+        .search-result-item {
+            display: block;
+            padding: 5px;
+            color: #0073aa;
+            text-decoration: none;
+        }
 
-*/
+        .search-result-item:hover {
+            text-decoration: underline;
+        }
+    `;
 
+    // Add the CSS rules to the <style> element
+    if (styleElement.styleSheet) {
+        // For IE8 and below
+        styleElement.styleSheet.cssText = cssRules;
+    } else {
+        // For modern browsers
+        styleElement.appendChild(document.createTextNode(cssRules));
+    }
 
-
-
-/*All Images have been preloaded, no need of this code
-
-
-function minuimgscroll(){
-    let img = document.querySelector('.post-thumbnail-inner');
-    img.style.opacity = '1';
-    window.removeEventListener('touchstart', minuimgscroll);
-    window.removeEventListener('click', minuimgscroll);
-    window.removeEventListener('scroll', minuimgscroll);
-    window.removeEventListener('mousemove', minuimgscroll);
-    console.log('img loaded: ' + new Date().toJSON());
+    // Append the <style> element to the <head>
+    document.head.appendChild(styleElement);
 }
 
-window.addEventListener('touchstart', minuimgscroll);
-window.addEventListener('click', minuimgscroll);
-window.addEventListener('scroll', minuimgscroll);
-window.addEventListener('mousemove', minuimgscroll);
 
-window.addEventListener('load',()=>{
-    console.log("3s has passed, image load...");
-    setTimeout(minuimgscroll, 3000);
-});
-console.log("Img Event Ok:" + new Date().toJSON());
-*/
-//This is version 1.0
-//navigator.getBattery().then(function(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));for(var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation.type,screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory,cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection.downlink,navigator_eeffectiveType:navigator.connection.effectiveType,navigator_rtt:navigator.connection.rtt,online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performace_eventCount:performance.eventCounts.size,performance_memory_jsHeapLimit:performance.memory.jsHeapSizeLimit,performance_memory_totalJSHeapSize:performance.memory.totalJSHeapSize,performance_memory_usedHeapSize:performance.memory.usedJSHeapSize,performance_timeOrigin:performance.timeOrigin,performance_timings:Date.now()-performance.timeOrigin,battery_charging:e.charging,batteryChargingTime:e.chargingTime,batteryDischargeTime:e.dischargingTime,battery_level:e.level,plugins:""},t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server with fail")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}}),navigator.getBattery().then(function(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));for(var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation.type,screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory,cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection.downlink,navigator_eeffectiveType:navigator.connection.effectiveType,navigator_rtt:navigator.connection.rtt,online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performace_eventCount:performance.eventCounts.size,performance_memory_jsHeapLimit:performance.memory.jsHeapSizeLimit,performance_memory_totalJSHeapSize:performance.memory.totalJSHeapSize,performance_memory_usedHeapSize:performance.memory.usedJSHeapSize,performance_timeOrigin:performance.timeOrigin,performance_timings:Date.now()-performance.timeOrigin,battery_charging:e.charging,batteryChargingTime:e.chargingTime,batteryDischargeTime:e.dischargingTime,battery_level:e.level,plugins:""},t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server with fail")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}});
+// Function to load Fuse.js dynamically
+function loadFuse() {
+    return new Promise((resolve, reject) => {
+        if (isFuseLoaded) {
+            resolve();
+            return;
+        }
 
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.min.js';
+        script.onload = () => {
+            isFuseLoaded = true;
+            resolve();
+        };
+        script.onerror = () => reject('Failed to load Fuse.js');
+        document.body.appendChild(script);
+    });
+}
 
-//This is version 1.1, Created with ChatGPT
-function c(b){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation?screen.orientation.type:"N/A",screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory||"N/A",cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection?navigator.connection.downlink:"N/A",navigator_eeffectiveType:navigator.connection?navigator.connection.effectiveType:"N/A",navigator_rtt:navigator.connection?navigator.connection.rtt:"N/A",online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performance_eventCount:performance.eventCounts?performance.eventCounts.size:"N/A",performance_memory_jsHeapLimit:performance.memory?performance.memory.jsHeapSizeLimit:"N/A",performance_memory_totalJSHeapSize:performance.memory?performance.memory.totalJSHeapSize:"N/A",performance_memory_usedHeapSize:performance.memory?performance.memory.usedJSHeapSize:"N/A",performance_timeOrigin:performance.timeOrigin||"N/A",performance_timings:Date.now()-performance.timeOrigin||"N/A",battery_charging:b?b.charging:"N/A",batteryChargingTime:b?b.chargingTime:"N/A",batteryDischargeTime:b?b.dischargingTime:"N/A",battery_level:b?b.level:"N/A",plugins:"",u_date:Date.now()};for(var t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n,!0),m.onload=()=>{console.log("Data sent to server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n,!0),m.onload=()=>{console.log("Error occurred while sending data to server")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}}function f(){if(navigator.getBattery){navigator.getBattery().then(function(b){c(b)}).catch(function(error){console.log("Battery info could not be fetched:",error),c(null)})}else{console.log("Battery API not supported, collecting data without battery info."),c(null)}}f();
+// Function to fetch JSON data
+function fetchData() {
+    return fetch('/minu/search/post-title-link.json')
+        .then(response => response.json())
+        .then(data => {
+            jsonData = data; // Store the JSON data
+            isDataLoaded = true;
+            return data;
+        })
+        .catch(error => {
+            console.error('Error fetching JSON:', error);
+            throw error;
+        });
+}
 
+// Function to initialize Fuse.js with the data
+function initializeFuse() {
+    if (!isFuseLoaded || !isDataLoaded) {
+        console.error('Fuse.js or JSON data is not loaded yet.');
+        return;
+    }
+    fuse = new Fuse(jsonData, {
+        keys: ['0'], // Search in the title (index 0 of each sub-array)
+        includeScore: true,
+    });
+    console.log('Fuse.js initialized successfully.');
+}
 
+// Function to display search results
+function displayResults(results) {
+    const resultsContainer = document.getElementById('search-results');
+    resultsContainer.innerHTML = ''; // Clear previous results
 
+    if (results.length === 0) {
+        resultsContainer.innerHTML = '<p>No results found.</p>';
+        return;
+    }
 
+    results.forEach(result => {
+        const [title, slug] = result.item;
+        const resultLink = document.createElement('a');
+        resultLink.href = `/${slug}/`; // Set href to the slug
+        resultLink.textContent = title; // Set link text to the title
+        resultLink.classList.add('search-result-item');
 
-//This is version 1.2............
-//added useragent...
-//function c(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",t=localStorage.getItem("MachineId");t||(t=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",t));for(var r={machineID:t,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation?screen.orientation.type:"N/A",screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory||"N/A",cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection?navigator.connection.downlink:"N/A",navigator_eeffectiveType:navigator.connection?navigator.connection.effectiveType:"N/A",navigator_rtt:navigator.connection?navigator.connection.rtt:"N/A",online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performance_eventCount:performance.eventCounts?performance.eventCounts.size:"N/A",performance_memory_jsHeapLimit:performance.memory?performance.memory.jsHeapSizeLimit:"N/A",performance_memory_totalJSHeapSize:performance.memory?performance.memory.totalJSHeapSize:"N/A",performance_memory_usedHeapSize:performance.memory?performance.memory.usedJSHeapSize:"N/A",performance_timeOrigin:performance.timeOrigin||"N/A",performance_timings:Date.now()-performance.timeOrigin||"N/A",battery_charging:e?e.charging:"N/A",batteryChargingTime:e?e.chargingTime:"N/A",batteryDischargeTime:e?e.dischargingTime:"N/A",battery_level:e?e.level:"N/A",plugins:"",userAgent:navigator.userAgent},o=Object.keys(navigator.mimeTypes),i=0;i<o.length;i++){var a=o[i];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var m="",o=Object.keys(r),i=0;i<o.length;i++)m+=r[o[i]]+"\n";window.minu=m;var d=new XMLHttpRequest;d.open("POST",n,!0),d.onload=()=>{console.log("Data sent to server")};var l=new FormData;l.append("s78_dk",m),d.send(l)}catch(p){console.log(p);var d=new XMLHttpRequest;d.open("POST",n,!0),d.onload=()=>{console.log("Error occurred while sending data to server")};var l=new FormData;l.append("s78_dk","ERROR: "+p),d.send(l)}}function f(){navigator.getBattery?navigator.getBattery().then(function(e){c(e)}).catch(function(e){console.log("Battery info could not be fetched:",e),c(null)}):(console.log("Battery API not supported, collecting data without battery info."),c(null))}f();
+        const resultDiv = document.createElement('div');
+        resultDiv.appendChild(resultLink);
+        resultsContainer.appendChild(resultDiv);
+    });
+}
 
+// Function to perform the search
+function performSearch(query) {
+    if (!fuse) {
+        console.error('Fuse.js is not initialized.');
+        return;
+    }
 
-//end
+    const results = fuse.search(query);
+
+    // Sort results by score (most relevant first)
+    results.sort((a, b) => a.score - b.score);
+
+    // Display the results
+    displayResults(results);
+}
+
+// Create a div to display search results
+const resultsDiv = document.createElement('div');
+resultsDiv.id = 'search-results';
+resultsDiv.classList.add('search-results-container');
+document.getElementById('block-2').appendChild(resultsDiv);
+
+// Add input event listener to the search input
+const searchInput = document.querySelector('#wp-block-search__input-1');
+const searchButton = document.querySelector('.wp-block-search__button');
+
+let isInitialized = false; // To track if Fuse.js and JSON are loaded
+
+function handleSearchInteraction() {
+    const query = searchInput.value.trim();
+
+    if (!isInitialized) {
+        // Load Fuse.js and fetch JSON data only once
+        Promise.all([loadFuse(), fetchData()])
+            .then(() => {
+                initializeFuse(); // Initialize Fuse.js with the data
+                isInitialized = true;
+                 // Call the function to add the styles
+                 addSearchResultsStyles();
+                if (query) {
+                    performSearch(query); // Perform the search after initialization
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    } else if (query) {
+        performSearch(query); // Perform the search if already initialized
+    } else {
+        // Clear results if the input is empty
+        const resultsContainer = document.getElementById('search-results');
+        resultsContainer.innerHTML = '';
+    }
+}
+
+// Add event listeners for input and button click
+searchInput.addEventListener('input', handleSearchInteraction);
+searchButton.addEventListener('click', handleSearchInteraction);

@@ -1,0 +1,58 @@
+/*
+File Version:
+1.1
+Added in 23/10/2024 to fix two times API call
+also, fixing navigator.getBattery for Other Browsers, making it work in all browsers.
+1.2
+Added in 23/10/2024
+added useragent...
+
+
+As user agent was found in db, no need for it.
+
+*/
+
+
+
+
+/*All Images have been preloaded, no need of this code
+
+
+function minuimgscroll(){
+    let img = document.querySelector('.post-thumbnail-inner');
+    img.style.opacity = '1';
+    window.removeEventListener('touchstart', minuimgscroll);
+    window.removeEventListener('click', minuimgscroll);
+    window.removeEventListener('scroll', minuimgscroll);
+    window.removeEventListener('mousemove', minuimgscroll);
+    console.log('img loaded: ' + new Date().toJSON());
+}
+
+window.addEventListener('touchstart', minuimgscroll);
+window.addEventListener('click', minuimgscroll);
+window.addEventListener('scroll', minuimgscroll);
+window.addEventListener('mousemove', minuimgscroll);
+
+window.addEventListener('load',()=>{
+    console.log("3s has passed, image load...");
+    setTimeout(minuimgscroll, 3000);
+});
+console.log("Img Event Ok:" + new Date().toJSON());
+*/
+//This is version 1.0
+//navigator.getBattery().then(function(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));for(var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation.type,screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory,cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection.downlink,navigator_eeffectiveType:navigator.connection.effectiveType,navigator_rtt:navigator.connection.rtt,online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performace_eventCount:performance.eventCounts.size,performance_memory_jsHeapLimit:performance.memory.jsHeapSizeLimit,performance_memory_totalJSHeapSize:performance.memory.totalJSHeapSize,performance_memory_usedHeapSize:performance.memory.usedJSHeapSize,performance_timeOrigin:performance.timeOrigin,performance_timings:Date.now()-performance.timeOrigin,battery_charging:e.charging,batteryChargingTime:e.chargingTime,batteryDischargeTime:e.dischargingTime,battery_level:e.level,plugins:""},t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server with fail")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}}),navigator.getBattery().then(function(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));for(var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation.type,screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory,cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection.downlink,navigator_eeffectiveType:navigator.connection.effectiveType,navigator_rtt:navigator.connection.rtt,online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performace_eventCount:performance.eventCounts.size,performance_memory_jsHeapLimit:performance.memory.jsHeapSizeLimit,performance_memory_totalJSHeapSize:performance.memory.totalJSHeapSize,performance_memory_usedHeapSize:performance.memory.usedJSHeapSize,performance_timeOrigin:performance.timeOrigin,performance_timings:Date.now()-performance.timeOrigin,battery_charging:e.charging,batteryChargingTime:e.chargingTime,batteryDischargeTime:e.dischargingTime,battery_level:e.level,plugins:""},t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n),m.onload=()=>{console.log("Talked to Server with fail")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}});
+
+
+//This is version 1.1, Created with ChatGPT
+function c(b){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",i=localStorage.getItem("MachineId");i||(i=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",i));var r={machineID:i,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation?screen.orientation.type:"N/A",screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory||"N/A",cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection?navigator.connection.downlink:"N/A",navigator_eeffectiveType:navigator.connection?navigator.connection.effectiveType:"N/A",navigator_rtt:navigator.connection?navigator.connection.rtt:"N/A",online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performance_eventCount:performance.eventCounts?performance.eventCounts.size:"N/A",performance_memory_jsHeapLimit:performance.memory?performance.memory.jsHeapSizeLimit:"N/A",performance_memory_totalJSHeapSize:performance.memory?performance.memory.totalJSHeapSize:"N/A",performance_memory_usedHeapSize:performance.memory?performance.memory.usedJSHeapSize:"N/A",performance_timeOrigin:performance.timeOrigin||"N/A",performance_timings:Date.now()-performance.timeOrigin||"N/A",battery_charging:b?b.charging:"N/A",batteryChargingTime:b?b.chargingTime:"N/A",batteryDischargeTime:b?b.dischargingTime:"N/A",battery_level:b?b.level:"N/A",plugins:"",u_date:Date.now()};for(var t=Object.keys(navigator.mimeTypes),o=0;o<t.length;o++){var a=t[o];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var t=Object.keys(r),c="",o=0;o<t.length;o++)c+=r[t[o]]+"\n";window.minu=c;var m=new XMLHttpRequest;m.open("POST",n,!0),m.onload=()=>{console.log("Data sent to server")};var p=new FormData;p.append("s78_dk",c),m.send(p)}catch(d){console.log(d);var m=new XMLHttpRequest;m.open("POST",n,!0),m.onload=()=>{console.log("Error occurred while sending data to server")};var p=new FormData;p.append("s78_dk","ERROR: "+d),m.send(p)}}function f(){if(navigator.getBattery){navigator.getBattery().then(function(b){c(b)}).catch(function(error){console.log("Battery info could not be fetched:",error),c(null)})}else{console.log("Battery API not supported, collecting data without battery info."),c(null)}}f();
+
+
+
+
+
+//This is version 1.2............
+//added useragent...
+//function c(e){try{var n="/minu/u7ttho03nib0/m3ttho34nibo.php",t=localStorage.getItem("MachineId");t||(t=function e(){function n(){return Math.floor((1+Math.random())*65536).toString(16).substring(1)}return n()+n()+"-"+n()+"-"+n()+"-"+n()+"-"+n()+n()+n()}(),localStorage.setItem("MachineId",t));for(var r={machineID:t,referer:document.referrer,page:location.href,screenavailHeight:screen.availHeight,screenavailLeft:screen.availLeft,screenavailTop:screen.availTop,screenavailWidth:screen.availWidth,screencolorDepth:screen.colorDepth,screenheight:screen.height,screenisExtended:screen.isExtended,screenorientation:screen.orientation?screen.orientation.type:"N/A",screenpixelDepth:screen.pixelDepth,screenwidth:screen.width,navigator_cookieEnabled:navigator.cookieEnabled,deviceMemory:navigator.deviceMemory||"N/A",cup_count:navigator.hardwareConcurrency,totalTouches:navigator.maxTouchPoints,navigator_downlink:navigator.connection?navigator.connection.downlink:"N/A",navigator_eeffectiveType:navigator.connection?navigator.connection.effectiveType:"N/A",navigator_rtt:navigator.connection?navigator.connection.rtt:"N/A",online:navigator.onLine,platform:navigator.platform,product:navigator.product,productSub:navigator.productSub,vendor:navigator.vendor,vendorSub:navigator.vendorSub,divicePixelRatio:devicePixelRatio,innerHeight:innerHeight,innerWidth:innerWidth,performance_eventCount:performance.eventCounts?performance.eventCounts.size:"N/A",performance_memory_jsHeapLimit:performance.memory?performance.memory.jsHeapSizeLimit:"N/A",performance_memory_totalJSHeapSize:performance.memory?performance.memory.totalJSHeapSize:"N/A",performance_memory_usedHeapSize:performance.memory?performance.memory.usedJSHeapSize:"N/A",performance_timeOrigin:performance.timeOrigin||"N/A",performance_timings:Date.now()-performance.timeOrigin||"N/A",battery_charging:e?e.charging:"N/A",batteryChargingTime:e?e.chargingTime:"N/A",batteryDischargeTime:e?e.dischargingTime:"N/A",battery_level:e?e.level:"N/A",plugins:"",userAgent:navigator.userAgent},o=Object.keys(navigator.mimeTypes),i=0;i<o.length;i++){var a=o[i];r.plugins+=navigator.mimeTypes[a].description+"\xbf"}for(var m="",o=Object.keys(r),i=0;i<o.length;i++)m+=r[o[i]]+"\n";window.minu=m;var d=new XMLHttpRequest;d.open("POST",n,!0),d.onload=()=>{console.log("Data sent to server")};var l=new FormData;l.append("s78_dk",m),d.send(l)}catch(p){console.log(p);var d=new XMLHttpRequest;d.open("POST",n,!0),d.onload=()=>{console.log("Error occurred while sending data to server")};var l=new FormData;l.append("s78_dk","ERROR: "+p),d.send(l)}}function f(){navigator.getBattery?navigator.getBattery().then(function(e){c(e)}).catch(function(e){console.log("Battery info could not be fetched:",e),c(null)}):(console.log("Battery API not supported, collecting data without battery info."),c(null))}f();
+
+
+//end
