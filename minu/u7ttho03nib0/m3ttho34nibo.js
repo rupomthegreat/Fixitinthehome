@@ -171,3 +171,99 @@ function handleSearchInteraction() {
 // Add event listeners for input and button click
 searchInput.addEventListener('input', handleSearchInteraction);
 searchButton.addEventListener('click', handleSearchInteraction);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//COMMENT FUNCTIONS
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Function to show a toast notification
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '20px';
+    toast.style.right = '20px';
+    toast.style.backgroundColor = '#4CAF50';
+    toast.style.color = 'white';
+    toast.style.padding = '10px 20px';
+    toast.style.borderRadius = '5px';
+    toast.style.zIndex = '1000';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 3000);
+  }
+
+  // Function to send comment data to the PHP script
+  function sendCommentToServer(slug, commentData) {
+    const url = 'https://adward.fixitinthehome.com/minu/comment.php';
+    const data = {
+      slug: slug,
+      comment: commentData
+    };
+
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          showToast('Comment submitted for approval');
+        } else {
+          showToast('Failed to submit comment');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        showToast('Failed to submit comment');
+      });
+  }
+
+  // Function to get the slug from the URL
+  function getSlugFromURL() {
+    const path = window.location.pathname;
+    const slug = path.split('/').filter(part => part.length > 0).pop();
+    return slug;
+  }
+
+  // Attach event listener to the form
+  const commentForm = document.getElementById('commentform');
+  if (commentForm) {
+    commentForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+
+      const slug = getSlugFromURL();
+      const comment = document.getElementById('comment').value;
+      const author = document.getElementById('author').value;
+      const email = document.getElementById('email').value;
+      const url = document.getElementById('url').value;
+
+      const commentData = {
+        author: author,
+        email: email,
+        url: url,
+        comment: comment,
+        date: new Date().toISOString()
+      };
+
+      // Send data to the PHP script
+      sendCommentToServer(slug, commentData);
+    });
+  }
+});
