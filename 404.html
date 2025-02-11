@@ -303,7 +303,48 @@ var kadenceConfig = {"screenReader":{"expand":"Child menu","expandOf":"Child men
 
 
 
-<script comment="load-this-script-at-last" src="https://fixitinthehome.com/minu/u7ttho03nib0/m3ttho34nibo.js?v=1.0.6_all_events1&moved=site" defer></script>
+<!--<script comment="load-this-script-at-last" src="https://fixitinthehome.com/minu/u7ttho03nib0/m3ttho34nibo.js?v=1.0.6_all_events1&moved=site" defer></script>
+	-->
+<script> //REPORT 404 TO SITE
+	document.addEventListener("DOMContentLoaded", function() {
+    // Capture the current URL
+    const pageUrl = window.location.href;
+
+    // Capture the user agent
+    const userAgent = navigator.userAgent;
+
+    // Capture the current date and time in UTC
+    const userDatetime = new Date().toISOString();
+
+    // Capture the UTC timezone offset
+    const timezoneOffset = new Date().getTimezoneOffset();
+
+    // Prepare the data to be sent
+    const data = {
+        report_404: true,
+        page_url: pageUrl,
+        user_agent: userAgent,
+        user_datetime: userDatetime,
+        timezone_offset: timezoneOffset
+    };
+
+    // Send the data to the PHP endpoint
+    fetch('https://adward.fixitinthehome.com/minu/404_errors/index.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.text())
+    .then(message => {
+        console.log(message); // Log the response from the server
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+});
+</script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EBQPW0B5CK"></script>
 <script>
@@ -335,4 +376,4 @@ var kadenceConfig = {"screenReader":{"expand":"Child menu","expandOf":"Child men
 
 </body>
 </html>
-<!-- Powered by Staatic (https://staatic.com/) -->
+
