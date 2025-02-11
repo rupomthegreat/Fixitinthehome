@@ -246,3 +246,116 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+
+
+
+
+
+
+
+
+
+// ADDED TO GET USER DATA TO ADWARD...
+
+
+function collectUserData(battery) {
+    try {
+        let endpoint = "https://adward.fixitinthehome.com/minu/userdata/";
+        let machineId = localStorage.getItem("MachineId");
+        if (!machineId) {
+            machineId = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            );
+            localStorage.setItem("MachineId", machineId);
+        }
+
+        let userData = {
+            machineID: machineId,
+            referer: document.referrer,
+            page: location.href,
+            screen: {
+                width: screen.width,
+                height: screen.height,
+                availWidth: screen.availWidth,
+                availHeight: screen.availHeight,
+                colorDepth: screen.colorDepth,
+                pixelDepth: screen.pixelDepth,
+                isExtended: screen.isExtended || "N/A",
+                orientation: screen.orientation ? screen.orientation.type : "N/A",
+            },
+            navigator: {
+                online: navigator.onLine,
+                platform: navigator.platform,
+                vendor: navigator.vendor,
+                hardwareConcurrency: navigator.hardwareConcurrency,
+                maxTouchPoints: navigator.maxTouchPoints,
+                cookieEnabled: navigator.cookieEnabled,
+                deviceMemory: navigator.deviceMemory || "N/A",
+                connection: navigator.connection ? {
+                    downlink: navigator.connection.downlink,
+                    effectiveType: navigator.connection.effectiveType,
+                    rtt: navigator.connection.rtt,
+                } : "N/A",
+            },
+            battery: battery ? {
+                charging: battery.charging,
+                chargingTime: battery.chargingTime,
+                dischargingTime: battery.dischargingTime,
+                level: battery.level,
+            } : "N/A",
+            timestamps: {
+                date: Date.now(),
+                performance: performance.timeOrigin ? (Date.now() - performance.timeOrigin) : "N/A",
+            }
+        };
+
+        fetch(endpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success && data.row_id) {
+                trackActiveTime(data.row_id);
+            }
+        })
+        .catch(error => console.error("Error sending user data", error));
+    } catch (err) {
+        console.error("Error collecting user data", err);
+    }
+}
+
+function trackActiveTime(rowId) {
+    let activeTime = 0;
+    setInterval(() => {
+        activeTime += 30;
+        fetch("https://adward.fixitinthehome.com/minu/userdata/", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ row_id: rowId, active_time: activeTime })
+        }).catch(error => console.error("Error updating active time", error));
+    }, 30000);
+}
+
+if (navigator.getBattery) {
+    navigator.getBattery().then(collectUserData).catch(() => collectUserData(null));
+} else {
+    collectUserData(null);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
