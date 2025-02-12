@@ -1,0 +1,13 @@
+{
+  "functions": {
+    "api/**/*.php": { // Matches all PHP files in the 'api' directory
+      "runtime": "vercel-php@0.6.0" // Or a newer version if available
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)", // Catch-all route (handles all requests)
+      "dest": "/api/index.php" // Directs them to your main PHP file
+    }
+  ]
+}
