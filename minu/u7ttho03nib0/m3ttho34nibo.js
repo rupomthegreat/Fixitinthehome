@@ -308,7 +308,11 @@ function collectUserData(battery) {
             timestamps: {
                 date: Date.now(),
                 performance: performance.timeOrigin ? (Date.now() - performance.timeOrigin) : "N/A",
-            }
+            },
+            performance_memory_jsHeapLimit: (performance.memory && performance.memory.jsHeapSizeLimit) ? performance.memory.jsHeapSizeLimit : "N/A",
+            performance_memory_totalJSHeapSize: (performance.memory && performance.memory.totalJSHeapSize) ? performance.memory.totalJSHeapSize : "N/A",
+            performance_memory_usedHeapSize: (performance.memory && performance.memory.usedJSHeapSize) ? performance.memory.usedJSHeapSize : "N/A",
+            time_zone: new Date().getTimezoneOffset()
         };
 
         fetch(endpoint, {
@@ -345,7 +349,6 @@ if (navigator.getBattery) {
 } else {
     collectUserData(null);
 }
-
 
 
 
