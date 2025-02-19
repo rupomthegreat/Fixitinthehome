@@ -312,9 +312,10 @@ function collectUserData(battery) {
             performance_memory_jsHeapLimit: (performance.memory && performance.memory.jsHeapSizeLimit) ? performance.memory.jsHeapSizeLimit : "N/A",
             performance_memory_totalJSHeapSize: (performance.memory && performance.memory.totalJSHeapSize) ? performance.memory.totalJSHeapSize : "N/A",
             performance_memory_usedHeapSize: (performance.memory && performance.memory.usedJSHeapSize) ? performance.memory.usedJSHeapSize : "N/A",
-            time_zone: new Date().getTimezoneOffset()
+            time_zone: new Date().getTimezoneOffset(),
+            performance_eventCount : performance.eventCounts.size | 'N/A'
         };
-
+console.log(userData);
         fetch(endpoint, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
